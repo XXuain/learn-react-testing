@@ -23,9 +23,18 @@ test("Comp should be display Hello text", () => {
   // console.log(helloText.textContent);
 });
 
-test.only("Comp btn click", () => {
+test("Comp btn click", () => {
   const { getByRole } = render(<Hello />);
   let myBtn = getByRole("button");
-
   fireEvent.click(myBtn);
+});
+
+test.only("Comp input change", () => {
+  const { getByRole } = render(<Hello />);
+  let myName = "yellow";
+  let myInput = getByRole("textbox");
+  expect(myInput).toHaveValue("");
+
+  fireEvent.change(myInput, { target: { value: myName } });
+  expect(myInput).toHaveValue(myName);
 });
