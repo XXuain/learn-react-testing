@@ -1,6 +1,6 @@
 import React from "react";
 import Hello from "./Hello";
-import { render } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 
 test("Comp should be display Hello text", () => {
   const { getByText, getByTestId, debug } = render(<Hello />);
@@ -21,4 +21,11 @@ test("Comp should be display Hello text", () => {
   expect(helloText.tagName).toBe("H1");
 
   // console.log(helloText.textContent);
+});
+
+test.only("Comp btn click", () => {
+  const { getByRole } = render(<Hello />);
+  let myBtn = getByRole("button");
+
+  fireEvent.click(myBtn);
 });
