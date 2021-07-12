@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import MovieDetails from "../components/movie-details";
 
 const select_movie = {
@@ -35,5 +35,30 @@ describe("MoveDetails comp", () => {
     expect(getByTestId("no_ratings").innerHTML).toBe(
       `(${select_movie.no_of_ratings})`
     );
+  });
+
+  test("mouseover should hight light the starts", () => {
+    const { container } = render(<MovieDetails movie={select_movie} />);
+    const starts = container.querySelectorAll(".rate-container svg");
+    starts.forEach((start, indx) => {
+      fireEvent.mouseOver(start);
+      const hightLight_starts = container.querySelectorAll(
+        ".rate-container .purple"
+      );
+      expect(hightLight_starts.length).toBe(indx + 1);
+    });
+  });
+
+  test("mouseleave should unhighlight the starts", () => {
+    const { container } = render(<MovieDetails movie={select_movie} />);
+    const starts = container.querySelectorAll(".rate-container svg");
+    starts.forEach((start, indx) => {
+      fireEvent.mouseOver(start);
+      fireEvent.mouseOut(start);
+      const hightLight_starts = container.querySelectorAll(
+        ".rate-container .purple"
+      );
+      expect(hightLight_starts.length).toBe(0);
+    });
   });
 });
